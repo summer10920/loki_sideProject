@@ -8,12 +8,16 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/loki_angular",
         "index": "apps/loki_angular/src/index.html",
         "browser": "apps/loki_angular/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/loki_angular/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -22,13 +26,10 @@
             "input": "apps/loki_angular/public"
           }
         ],
-        "styles": ["apps/loki_angular/src/styles.scss"],
-        "scripts": [],
-        "server": "apps/loki_angular/src/main.server.ts",
-        "ssr": {
-          "entry": "apps/loki_angular/src/server.ts"
-        },
-        "outputMode": "server"
+        "styles": [
+          "apps/loki_angular/src/styles.scss"
+        ],
+        "scripts": []
       },
       "configurations": {
         "production": {
@@ -67,21 +68,8 @@
       },
       "defaultConfiguration": "development"
     },
-    "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
-      "options": {
-        "buildTarget": "loki_angular:build"
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint"
-    },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
-      "options": {
-        "reportsDirectory": "../../coverage/apps/loki_angular"
-      }
     },
     "serve-static": {
       "continuous": true,

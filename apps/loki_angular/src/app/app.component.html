@@ -1,2 +1,45 @@
-<app-nx-welcome></app-nx-welcome>
-<router-outlet></router-outlet>
+<header
+  class="fixed top-0 left-0 right-0 h-16 bg-gray-100 dark:bg-gray-800 shadow flex items-center justify-between px-4 z-50">
+  <h1 class="text-xl font-semibold">DevExtreme App</h1>
+  <nav class="flex items-center gap-4">
+    <button aria-label="Toggle Dark Mode" (click)="toggleDarkMode()" class="w-6 h-6"> 🌙 </button>
+    <img src="/avatar.png" alt="User" class="w-8 h-8 rounded-full" />
+  </nav>
+</header>
+<div class="flex pt-16 min-h-screen">
+  <aside class="w-64 bg-gray-200 dark:bg-gray-700 p-4 space-y-4">
+    <nav>
+      <ul class="space-y-2">
+        <li><a href="#" class="block px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-600">Home</a></li>
+        <li>
+          <details class="group">
+            <summary class="cursor-pointer px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-600">Examples
+            </summary>
+            <ul class="pl-4 mt-1 space-y-1">
+              <li><a href="#" class="block px-2 py-1 hover:bg-gray-300 dark:hover:bg-gray-600">Profile</a></li>
+              <li><a href="#" class="block px-2 py-1 hover:bg-gray-300 dark:hover:bg-gray-600">Tasks</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <main class="flex-1 bg-gray-50 dark:bg-gray-900 p-6">
+    <article class="prose dark:prose-invert max-w-none">
+      <router-outlet></router-outlet>
+    </article>
+  </main>
+</div>
+<footer class="text-center text-xs py-4 text-gray-500 dark:text-gray-400">
+  <p>&copy; 2011–2025 DevExtreme App Inc.</p>
+</footer>
+<section class="flex flex-row items-center justify-between bg-red-100 dark:bg-stone-800">
+  <nav>
+    <a routerLink="/">Home</a>
+    <a routerLink="/about">About</a>
+    <a routerLink="/contact">Contact</a>
+  </nav>
+</section>
+<!-- <h1 class="text-3xl font-bold underline"> Hello, Tailwind! </h1>
+<app-nx-welcome></app-nx-welcome> -->
+<!-- <router-outlet></router-outlet> -->
