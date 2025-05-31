@@ -48,6 +48,10 @@
       "linter": "eslint",
       "style": "scss",
       "unitTestRunner": "vitest"
+    },
+    "@nx/angular:component": {
+      "style": "scss",
+      "standalone": true
     }
   }
 }

@@ -1,0 +1,76 @@
+<loki-layout-header />
+<div class="flex pt-16 min-h-screen">
+  <aside
+    [ngClass]="isSidebarOpen ? 'w-64' : 'w-[52px]'"
+    class="bg-white dark:bg-gray-800 space-y-4 transition-all duration-300 ease-in-out shadow-md relative"
+    (click)="toggleSidebar()"
+    (keyup.enter)="toggleSidebar()"
+    (keyup.space)="toggleSidebar()"
+    tabindex="0"
+  >
+    <nav>
+      <ul>
+        <li>
+          <a
+            [attr.href]="'/home'"
+            (click)="navigateToPage('/home', $event)"
+            [ngClass]="{
+              'bg-gray-200 dark:bg-gray-700': currentRoute === '/home'
+            }"
+            class="p-4 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center gap-2"
+          >
+            <fa-icon [icon]="faHouse" class="fa-fw"></fa-icon>
+            <span *ngIf="isSidebarOpen">Home</span>
+          </a>
+        </li>
+        <li>
+          <details class="group">
+            <summary
+              class="cursor-pointer p-4 hover:bg-gray-300 dark:hover ро dark:hover:bg-gray-600 flex items-center gap-2"
+              (click)="isSidebarOpen && $event.stopPropagation()"
+            >
+              <fa-icon [icon]="faCoffee" class="fa-fw"></fa-icon>
+              <span *ngIf="isSidebarOpen">Examples</span>
+            </summary>
+            <ul class="pl-4 mt-1 space-y-1" *ngIf="isSidebarOpen">
+              <li>
+                <a
+                  [attr.href]="'/profile'"
+                  (click)="navigateToPage('/profile', $event)"
+                  [ngClass]="{
+                    'bg-gray-200 dark:bg-gray-700': currentRoute === '/profile'
+                  }"
+                  class="block p-4 hover:bg-gray-300 dark:hover:bg-gray-600"
+                >
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a
+                  [attr.href]="'/tasks'"
+                  (click)="navigateToPage('/tasks', $event)"
+                  [ngClass]="{
+                    'bg-gray-200 dark:bg-gray-700': currentRoute === '/tasks'
+                  }"
+                  class="block p-4 hover:bg-gray-300 dark:hover:bg-gray-600"
+                >
+                  Tasks
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <main class="flex-1 bg-gray-50 dark:bg-gray-900 p-6 pb-12">
+    <article class="prose dark:prose-invert max-w-none">
+      <ng-content></ng-content>
+    </article>
+  </main>
+  <footer
+    class="absolute inset-x-0 bottom-0 h-12 text-center text-xs py-4 text-gray-300 dark:text-gray-400"
+  >
+    &copy; 2011–2025 Owned by LokiWebs Frontend Designer
+  </footer>
+</div>

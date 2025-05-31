@@ -2,7 +2,7 @@
   "name": "loki_angular",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "app",
+  "prefix": "loki",
   "sourceRoot": "apps/loki_angular/src",
   "tags": [],
   "targets": {
