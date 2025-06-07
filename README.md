@@ -1,82 +1,87 @@
 # LokiSideProject
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+本專案採用 [Nx](https://nx.dev) monorepo 架構，方便管理多個前端應用程式。主要包含兩個 app：`loki_angular` 及 `loki_devextreme`。
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+---
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Nx 版本與設定
 
-## Finish your CI setup
+- **Nx 版本**：21.1.2
+- **專案管理**：Nx 統一管理多個 app 與函式庫，提升大型專案的維護與協作效率。
+- **主要設定檔**：
+  - `nx.json`：Nx 全域設定
+  - `project.json`：各 app 的任務與細部設定
+  - `package.json`：npm 套件管理
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/W907kBBZXs)
+---
 
+## 如何啟動與建置各 app
 
-## Run tasks
+### loki_angular
 
-To run the dev server for your app, use:
+- 啟動開發伺服器：
+  ```sh
+  npx nx serve loki_angular
+  ```
+  > 預設 http://localhost:4200/
 
-```sh
-npx nx serve loki_angular
-```
+- 建置（部屬用產出）：
+  ```sh
+  npx nx build loki_angular
+  ```
+  > 產出於 `dist/apps/loki_angular`，預設 production 模式
 
-To create a production bundle:
+---
 
-```sh
-npx nx build loki_angular
-```
+### loki_devextreme
 
-To see all available targets to run for a project, run:
+- 啟動開發伺服器：
+  ```sh
+  npx nx serve loki_devextreme
+  ```
 
-```sh
-npx nx show project loki_angular
-```
+- 建置（部屬用產出）：
+  ```sh
+  npx nx build loki_devextreme
+  ```
+  > 產出於 `dist/apps/loki_devextreme`
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+---
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 其他常用 Nx 指令
 
-## Add new projects
+- 查看所有可用任務（targets）：
+  ```sh
+  npx nx show project loki_angular
+  npx nx show project loki_devextreme
+  ```
+- 稽核程式碼格式：
+  ```sh
+  npx nx lint loki_angular
+  npx nx lint loki_devextreme
+  ```
+- 產生依賴圖：
+  ```sh
+  npx nx graph
+  ```
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+---
 
-Use the plugin's generator to create new projects.
+## 專案目錄結構簡介
 
-To generate a new application, use:
+- `apps/loki_angular/`：主 Angular + Tailwind 應用
+- `apps/loki_devextreme/`：另一個 app，支援更多 targets
+- `libs/`：可共用的函式庫（如有）
+- 其他 Nx 設定檔與工具
 
-```sh
-npx nx g @nx/angular:app demo
-```
+---
 
-To generate a new library, use:
+## 參考資源
 
-```sh
-npx nx g @nx/angular:lib mylib
-```
+- [Nx 官方文件](https://nx.dev)
+- [Angular 官方文件](https://angular.io/)
+- [Tailwind CSS 文件](https://tailwindcss.com/)
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+---
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+如需更進階的部屬教學（如 Docker、雲端平台），歡迎再詢問！

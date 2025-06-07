@@ -1,0 +1,66 @@
+<aside
+  [ngClass]="isSidebarOpen ? 'w-64' : 'w-[52px]'"
+  class="bg-white dark:bg-gray-800 space-y-4 transition-all duration-300 ease-in-out shadow-md relative h-full"
+  (click)="toggleSidebar()"
+  (keyup.enter)="toggleSidebar()"
+  (keyup.space)="toggleSidebar()"
+  tabindex="0"
+>
+  <nav>
+    <ul>
+      <ng-container *ngFor="let item of menuConfig">
+        <li
+          *ngIf="!item.children"
+          [ngClass]="{
+            'bg-gray-200 dark:bg-gray-700': currentRoute === item.routePath
+          }"
+        >
+          <a
+            [attr.href]="item.routePath || ''"
+            (click)="navigateToPage(item.routePath || '', $event)"
+            class="p-4 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center gap-2"
+          >
+            <fa-icon
+              *ngIf="item.icon"
+              [icon]="iconMap[item.icon]"
+              class="fa-fw"
+              [ngClass]="item.iconClassName"
+            ></fa-icon>
+            <span *ngIf="isSidebarOpen">{{ item.label }}</span>
+          </a>
+        </li>
+        <li *ngIf="item.children">
+          <details class="group">
+            <summary
+              class="cursor-pointer p-4 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center gap-2"
+              (click)="isSidebarOpen && $event.stopPropagation()"
+            >
+              <fa-icon
+                *ngIf="item.icon"
+                [icon]="iconMap[item.icon]"
+                class="fa-fw"
+                [ngClass]="item.iconClassName"
+              ></fa-icon>
+              <span *ngIf="isSidebarOpen">{{ item.label }}</span>
+            </summary>
+            <ul class="mt-1 space-y-1" *ngIf="isSidebarOpen">
+              <li *ngFor="let child of item.children">
+                <a
+                  [attr.href]="child.routePath || ''"
+                  (click)="navigateToPage(child.routePath || '', $event)"
+                  [ngClass]="{
+                    'bg-gray-200 dark:bg-gray-700':
+                      currentRoute === child.routePath
+                  }"
+                  class="block p-4 hover:bg-gray-300 dark:hover:bg-gray-600 before:content-[''] before:w-6 before:inline-block"
+                >
+                  {{ child.label }}
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+      </ng-container>
+    </ul>
+  </nav>
+</aside>
