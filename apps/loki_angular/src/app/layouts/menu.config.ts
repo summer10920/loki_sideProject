@@ -20,12 +20,12 @@ export const MenuConfig: MenuItem[] = [
     children: [
       {
         label: 'Todo List',
-        routePath: '/profile',
+        routePath: '/learn/todo',
         iconClassName: 'text-green-600 dark:text-green-300',
       },
       {
         label: 'Tasks',
-        routePath: '/tasks',
+        routePath: '/learn/tasks',
         iconClassName: 'text-pink-600 dark:text-pink-300',
       },
     ],

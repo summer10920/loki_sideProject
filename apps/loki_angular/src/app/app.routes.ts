@@ -1,9 +1,6 @@
-import { Route } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
-import { TasksPageComponent } from './pages/tasks-page/tasks-page.component';
+import { Routes } from '@angular/router';
 
-export const appRoutes: Route[] = [
+export const appRoutes: Routes = [
   {
     path: '',
     redirectTo: 'home',
@@ -11,14 +8,12 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'home',
-    component: HomePageComponent,
+    loadComponent: () =>
+      import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
-    path: 'profile',
-    component: ProfilePageComponent,
-  },
-  {
-    path: 'tasks',
-    component: TasksPageComponent,
+    path: 'learn',
+    loadChildren: () =>
+      import('./pages/learn/learn.routes').then((m) => m.LearnRoutes),
   },
 ];

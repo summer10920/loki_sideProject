@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'loki-tasks-page',
+  selector: 'loki-tasks',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './tasks-page.component.html',
-  styleUrl: './tasks-page.component.css',
+  templateUrl: './tasks.component.html',
+  styleUrl: './tasks.component.css',
 })
-export class TasksPageComponent {}
+export class TasksComponent {}
