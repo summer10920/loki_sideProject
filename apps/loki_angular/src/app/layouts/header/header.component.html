@@ -92,8 +92,8 @@
       class="w-6 h-6"
     >
       <fa-icon
-        [ngClass]="isDark ? 'text-white' : 'text-amber-400'"
-        [icon]="isDark ? faMoon : faSun"
+        [ngClass]="isDark() ? 'text-white' : 'text-amber-400'"
+        [icon]="isDark() ? faMoon : faSun"
       ></fa-icon>
     </button>
   </nav>

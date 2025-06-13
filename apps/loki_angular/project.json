@@ -15,9 +15,7 @@
         "outputPath": "dist/apps/loki_angular",
         "index": "apps/loki_angular/src/index.html",
         "browser": "apps/loki_angular/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": [],
         "tsConfig": "apps/loki_angular/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, inject, OnInit, Renderer2, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
@@ -12,13 +12,13 @@ import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 })
 export class LayoutHeaderComponent implements OnInit {
   private renderer = inject(Renderer2);
-  isDark = localStorage.getItem('darkMode') === 'true';
+  isDark = signal(localStorage.getItem('darkMode') === 'true');
 
   readonly faSun = faSun;
   readonly faMoon = faMoon;
 
   ngOnInit(): void {
-    this.setDarkMode(this.isDark);
+    this.setDarkMode(this.isDark());
   }
 
   toggleDarkMode(): void {
@@ -32,6 +32,6 @@ export class LayoutHeaderComponent implements OnInit {
     );
 
     localStorage.setItem('darkMode', enable.toString());
-    this.isDark = enable;
+    this.isDark.set(enable);
   }
 }

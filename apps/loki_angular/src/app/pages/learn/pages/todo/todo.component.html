@@ -2,7 +2,8 @@
   <h2 class="text-2xl font-bold mb-4">Todo List</h2>
   <form (ngSubmit)="addTodo()" class="flex gap-2 mb-4">
     <input
-      [(ngModel)]="newTodo"
+      [ngModel]="newTodo()"
+      (ngModelChange)="newTodo.set($event)"
       name="todo"
       class="flex-1 p-2 border rounded"
       placeholder="輸入待辦事項"
@@ -14,7 +15,7 @@
   </form>
   <ul>
     <li
-      *ngFor="let todo of (todos$ | async) ?? []"
+      *ngFor="let todo of todos()"
       class="flex items-center gap-2 mb-2"
     >
       <input
@@ -35,8 +36,12 @@
       </button>
     </li>
   </ul>
-  <div *ngIf="editingTodo">
-    <input [(ngModel)]="editingText" class="p-2 border rounded" />
+  <div *ngIf="editingTodo()">
+    <input 
+      [ngModel]="editingText()"
+      (ngModelChange)="editingText.set($event)"
+      class="p-2 border rounded" 
+    />
     <button
       (click)="updateTodo()"
       class="px-2 py-1 bg-green-500 text-white rounded"

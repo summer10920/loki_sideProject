@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Todo, selectAllTodos, selectTodoState } from './_state/todo.selectors';
 import * as TodoActions from './_state/todo.actions';
 
@@ -14,13 +14,15 @@ import * as TodoActions from './_state/todo.actions';
   styleUrls: ['./todo.component.scss'],
 })
 export class TodoComponent implements OnInit {
-  todos$: Observable<Todo[]>;
-  newTodo = '';
-  editingTodo: Todo | null = null;
-  editingText = '';
+  private store = inject(Store);
+  
+  todos = toSignal(this.store.select(selectAllTodos), { initialValue: [] as Todo[] });
+  newTodo = signal('');
+  editingTodo = signal<Todo | null>(null);
+  editingText = signal('');
 
-  constructor(private store: Store) {
-    this.todos$ = this.store.select(selectAllTodos);
+  ngOnInit() {
+    console.log('TodoComponent initialized');
     
     // Debug: 監聽整個 feature state
     this.store.select(selectTodoState).subscribe(state => {
@@ -28,14 +30,11 @@ export class TodoComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log('TodoComponent initialized');
-  }
-
   addTodo() {
-    if (this.newTodo.trim()) {
-      this.store.dispatch(TodoActions.addTodo({ text: this.newTodo.trim() }));
-      this.newTodo = '';
+    const todoText = this.newTodo();
+    if (todoText.trim()) {
+      this.store.dispatch(TodoActions.addTodo({ text: todoText.trim() }));
+      this.newTodo.set('');
     }
   }
 
@@ -48,16 +47,19 @@ export class TodoComponent implements OnInit {
   }
 
   editTodo(todo: Todo) {
-    this.editingTodo = todo;
-    this.editingText = todo.text;
+    this.editingTodo.set(todo);
+    this.editingText.set(todo.text);
   }
 
   updateTodo() {
-    if (this.editingTodo && this.editingText.trim()) {
+    const currentEditingTodo = this.editingTodo();
+    const currentEditingText = this.editingText();
+    
+    if (currentEditingTodo && currentEditingText.trim()) {
       this.store.dispatch(
         TodoActions.updateTodo({
-          id: this.editingTodo.id,
-          text: this.editingText.trim(),
+          id: currentEditingTodo.id,
+          text: currentEditingText.trim(),
         })
       );
       this.cancelEdit();
@@ -65,7 +67,7 @@ export class TodoComponent implements OnInit {
   }
 
   cancelEdit() {
-    this.editingTodo = null;
-    this.editingText = '';
+    this.editingTodo.set(null);
+    this.editingText.set('');
   }
 }
