@@ -7,7 +7,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* You can add global styles to this file, and also import other style files */
+/* 字體變數 */
+$font-family: 'Roboto', 'Noto Sans TC', sans-serif;
+
+/* 設定全域字體 */
+body {
+  font-family: $font-family;
+}
+
+/* Light Theme */
 html {
   @include mat.theme(
     (
@@ -16,8 +24,31 @@ html {
         tertiary: mat.$orange-palette,
         theme-type: light,
       ),
-      typography: 'Roboto, "Noto Sans TC", sans-serif',
+      typography: $font-family,
       density: 0,
     )
   );
+}
+
+/* Dark Theme */
+html.dark {
+  --mdc-elevated-card-container-color: #333;
+
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette,
+        theme-type: dark,
+      ),
+      typography: $font-family,
+      density: 0,
+    )
+  );
+}
+
+mat-form-field {
+  * {
+    border-style: unset;
+  }
 }

@@ -1,72 +1,53 @@
 <mat-card class="max-w-lg mx-auto mt-8">
-  <mat-card-header>
-    <mat-card-title>待辦事項清單</mat-card-title>
-  </mat-card-header>
-
   <mat-card-content>
-    <form (ngSubmit)="addTodo()" class="flex gap-2 mb-4">
-      <mat-form-field class="flex-1">
-        <mat-label>新增待辦事項</mat-label>
+    <form (ngSubmit)="submitTodo()" class="flex gap-2 mb-4 items-center">
+      <mat-form-field class="flex-1" appearance="outline">
+        <mat-label>{{ editingTodo() ? '修改' : '新增' }}待辦事項</mat-label>
         <input
+          #todoInput
           matInput
-          [ngModel]="newTodo()"
-          (ngModelChange)="newTodo.set($event)"
+          [ngModel]="inputTodo()"
+          (ngModelChange)="inputTodo.set($event)"
+          (blur)="submitTodo()"
           name="todo"
           placeholder="輸入待辦事項"
-          required
         />
+        <mat-icon
+          (click)="submitTodo()"
+          matSuffix
+          class="cursor-pointer rotate-0 hover:text-blue-500 transition-all duration-300 hover:rotate-180"
+          >{{ editingTodo() ? 'edit' : 'add' }}</mat-icon
+        >
       </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">
-        <mat-icon>add</mat-icon>
-        新增
-      </button>
     </form>
 
-    <mat-list>
-      <mat-list-item *ngFor="let todo of todos()">
+    <ul class="flex flex-col gap-2">
+      @for (todo of todos(); track todo.id) {
+      <li class="flex items-center justify-between">
         <mat-checkbox
+          class="flex-1"
           [checked]="todo.completed"
           (change)="toggleComplete(todo)"
-          class="mr-2"
         >
+          <span
+            [class.line-through]="todo.completed"
+            [class.text-gray-400]="todo.completed"
+          >
+            {{ todo.text }}
+          </span>
         </mat-checkbox>
-        <span
-          [class.line-through]="todo.completed"
-          [class.text-gray-400]="todo.completed"
-          class="flex-1"
-        >
-          {{ todo.text }}
-        </span>
-        <button mat-button color="accent" (click)="editTodo(todo)">
-          <mat-icon>edit</mat-icon>
-          編輯
-        </button>
-        <button mat-button color="warn" (click)="deleteTodo(todo.id)">
-          <mat-icon>delete</mat-icon>
-          刪除
-        </button>
-      </mat-list-item>
-    </mat-list>
-
-    <div *ngIf="editingTodo()" class="mt-4">
-      <mat-form-field class="w-full">
-        <mat-label>編輯待辦事項</mat-label>
-        <input
-          matInput
-          [ngModel]="editingText()"
-          (ngModelChange)="editingText.set($event)"
-        />
-      </mat-form-field>
-      <div class="flex gap-2">
-        <button mat-raised-button color="primary" (click)="updateTodo()">
-          <mat-icon>save</mat-icon>
-          儲存
-        </button>
-        <button mat-raised-button color="warn" (click)="cancelEdit()">
-          <mat-icon>cancel</mat-icon>
-          取消
-        </button>
-      </div>
-    </div>
+        <div class="flex gap-2">
+          @if (!todo.completed) {
+          <button mat-icon-button (click)="editTodo(todo)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          }
+          <button mat-icon-button (click)="deleteTodo(todo.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </li>
+      }
+    </ul>
   </mat-card-content>
 </mat-card>

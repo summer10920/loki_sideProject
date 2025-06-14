@@ -1,5 +1,12 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  computed,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -12,49 +19,66 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'loki-todo',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
-    MatListModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss'],
 })
 export class TodoComponent implements OnInit {
   private store = inject(Store);
-  
-  todos = toSignal(this.store.select(selectAllTodos), { initialValue: [] as Todo[] });
-  newTodo = signal('');
+
+  @ViewChild('todoInput') todoInput!: ElementRef<HTMLInputElement>;
+
+  todos = toSignal(this.store.select(selectAllTodos), {
+    initialValue: [] as Todo[],
+  });
+
+  inputTodo = signal('');
   editingTodo = signal<Todo | null>(null);
   editingText = signal('');
 
+  // life cycle
+  // ------------------------------------------------------------
   ngOnInit() {
     console.log('TodoComponent initialized');
-    
+
     // Debug: 監聽整個 feature state
-    this.store.select(selectTodoState).subscribe(state => {
+    this.store.select(selectTodoState).subscribe((state) => {
       console.log('Todo Feature State:', state);
     });
   }
 
-  addTodo() {
-    const todoText = this.newTodo();
-    if (todoText.trim()) {
+  // event handler
+  // ------------------------------------------------------------
+  submitTodo() {
+    const todoText = this.inputTodo();
+    if (!todoText.trim()) return;
+    const hasEditingTodo = this.editingTodo()?.id;
+
+    if (hasEditingTodo) {
+      this.store.dispatch(
+        TodoActions.updateTodo({
+          id: hasEditingTodo,
+          text: todoText.trim(),
+        })
+      );
+      this.editingTodo.set(null);
+    } else {
       this.store.dispatch(TodoActions.addTodo({ text: todoText.trim() }));
-      this.newTodo.set('');
     }
+    this.inputTodo.set('');
   }
 
   deleteTodo(id: number) {
@@ -67,26 +91,7 @@ export class TodoComponent implements OnInit {
 
   editTodo(todo: Todo) {
     this.editingTodo.set(todo);
-    this.editingText.set(todo.text);
-  }
-
-  updateTodo() {
-    const currentEditingTodo = this.editingTodo();
-    const currentEditingText = this.editingText();
-    
-    if (currentEditingTodo && currentEditingText.trim()) {
-      this.store.dispatch(
-        TodoActions.updateTodo({
-          id: currentEditingTodo.id,
-          text: currentEditingText.trim(),
-        })
-      );
-      this.cancelEdit();
-    }
-  }
-
-  cancelEdit() {
-    this.editingTodo.set(null);
-    this.editingText.set('');
+    this.inputTodo.set(todo.text);
+    this.todoInput?.nativeElement.focus();
   }
 }
