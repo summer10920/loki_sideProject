@@ -1,0 +1,124 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Cursor Rules
+
+## 1. 專案基本資訊
+- 專案名稱：loki_sideProject
+- 工作空間：Nx 21.1.3
+- 建構工具：Vite
+- 包管理工具：npm
+- 主要依賴：
+  - @analogjs/vite-plugin-angular
+  - Tailwind CSS
+  - Angular Material
+  - DevExtreme
+
+## 2. Nx 工作空間規範
+
+### 2.1 基本概念
+- 使用 Nx 管理多個應用程式和函式庫
+- 遵循 Nx 的 monorepo 結構
+- 使用 Nx 的依賴圖進行建構優化
+- 使用 Nx 的快取機制加速建構
+
+### 2.2 應用程式結構
+```
+loki_sideProject/
+├── apps/                    # 應用程式目錄
+│   ├── loki_angular/       # Angular 應用
+│   └── loki_devextreme/    # DevExtreme 應用
+├── libs/                    # 共用函式庫目錄
+│   ├── shared/             # 共用元件和服務
+│   └── ui/                 # UI 元件庫
+├── tools/                   # 建構和開發工具
+└── nx.json                 # Nx 配置檔案
+```
+
+### 2.3 常用 Nx 指令
+```bash
+# 建立新應用
+nx g @nx/angular:app <app-name>
+
+# 建立新函式庫
+nx g @nx/angular:lib <lib-name>
+
+# 建立新元件
+nx g @nx/angular:component <component-name> --project=<project-name>
+
+# 執行應用
+nx serve <app-name>
+
+# 建構應用
+nx build <app-name>
+
+# 執行測試
+nx test <project-name>
+
+# 檢查依賴關係
+nx graph
+```
+
+### 2.4 最佳實踐
+- 使用 Nx 的依賴圖進行程式碼分割
+- 實作適當的函式庫邊界
+- 使用 Nx 的受影響命令進行選擇性建構
+- 善用 Nx 的快取機制
+- 遵循 Nx 的命名規範
+
+### 2.5 效能優化
+- 使用 Nx 的分散式建構
+- 實作適當的建構快取策略
+- 使用 Nx 的受影響命令進行選擇性測試
+- 優化 Nx 的建構配置
+
+## 3. 專案規範
+
+### 3.1 loki-angular
+請參考 [loki-angular 專案規範](mdc:loki-angular.mdc)
+
+### 3.2 loki-devextreme
+請參考 [loki-devextreme 專案規範](mdc:loki-devextreme.mdc)
+
+## 4. 共用規範
+
+### 4.1 開發規範
+- 使用繁體中文溝通
+- 程式碼註解使用英文
+- 使用 ESLint 和 Prettier 進行程式碼格式化
+- 使用 TypeScript 嚴格模式
+
+### 4.2 安全性規範
+- 使用框架的內建安全機制
+- 實作 CSRF 防護
+- 使用 HTTPS
+- 實作適當的認證和授權機制
+- 避免 XSS 攻擊
+
+### 4.3 部署規範
+- 使用 Vite 進行建構
+- 環境變數管理
+- 錯誤處理和日誌記錄
+- 監控和效能追蹤
+- CI/CD 流程
+
+### 4.4 版本控制
+- 使用 Git 進行版本控制
+- 遵循 Git Flow 工作流程
+- 提交訊息格式：
+  - feat: 新功能
+  - fix: 修復問題
+  - docs: 文件更新
+  - style: 程式碼格式調整
+  - refactor: 重構
+  - test: 測試相關
+  - chore: 建構過程或輔助工具的變動
+
+### 4.5 文件規範
+- 使用 Markdown 格式
+- 重要文件放在 `docs` 目錄
+- API 文件使用 JSDoc 格式
+- 保持文件即時更新
+

@@ -6,10 +6,29 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Todo, selectAllTodos, selectTodoState } from './_state/todo.selectors';
 import * as TodoActions from './_state/todo.actions';
 
+// Material 模組
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 @Component({
   selector: 'loki-todo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatListModule,
+    MatFormFieldModule
+  ],
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss'],
 })

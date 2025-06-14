@@ -8,9 +8,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/loki_angular",
         "index": "apps/loki_angular/src/index.html",
@@ -24,9 +22,7 @@
             "input": "apps/loki_angular/public"
           }
         ],
-        "styles": [
-          "apps/loki_angular/src/styles.scss"
-        ],
+        "styles": ["apps/loki_angular/src/styles.scss"],
         "scripts": []
       },
       "configurations": {

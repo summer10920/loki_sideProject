@@ -1,0 +1,127 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# loki-angular 專案規範
+
+## 1. 技術堆疊
+- Angular 19.2.x
+- Vite 作為建構工具
+- Tailwind CSS + SCSS 作為樣式解決方案
+- Angular Material 作為 UI 元件庫
+
+## 2. 現代 Angular 技術標準
+
+### 2.1 Standalone Components
+- 所有新元件都使用 standalone 模式
+- 使用 `imports` 陣列管理依賴
+- 避免使用 `NgModule` 除非必要
+- 使用 `provideRouter` 等函數進行依賴注入
+
+### 2.2 Signals
+- 使用 signals 進行狀態管理
+- 遵循以下命名規範：
+  - 狀態變數：`xxxState`
+  - 計算值：`xxxComputed`
+  - 方法：`xxxMethod`
+- 使用 `computed` 進行衍生狀態計算
+- 使用 `effect` 處理副作用
+
+### 2.3 新的控制流程語法
+- 使用 `@if` 替代 `*ngIf`
+- 使用 `@for` 替代 `*ngFor`
+- 使用 `@switch` 替代 `*ngSwitch`
+- 使用 `@defer` 進行延遲載入
+
+### 2.4 依賴注入
+- 使用 `inject` 函數進行依賴注入
+- 使用 `provide` 函數提供服務
+- 使用 `EnvironmentProviders` 管理環境配置
+
+## 3. NgRx 規範
+
+### 3.1 基本原則
+- 使用 NgRx 進行狀態管理
+- 遵循單向數據流
+- 使用 TypeScript 嚴格模式
+- 實作適當的錯誤處理
+
+### 3.2 文件結構
+```
+src/app/
+├── store/
+│   ├── actions/
+│   ├── reducers/
+│   ├── selectors/
+│   ├── effects/
+│   └── models/
+```
+
+### 3.3 Actions
+- 使用 `createAction` 創建 action
+- 遵循命名規範：`[Feature] Action Type`
+- 使用 props 定義 action payload
+- 實作 action creators
+
+### 3.4 Reducers
+- 使用 `createReducer` 創建 reducer
+- 使用 `on` 函數處理 action
+- 實作不可變更新模式
+- 使用 TypeScript 類型檢查
+
+### 3.5 Selectors
+- 使用 `createSelector` 創建 selector
+- 實作 memoization
+- 使用 TypeScript 類型檢查
+- 避免 selector 副作用
+
+### 3.6 Effects
+- 使用 `createEffect` 創建 effect
+- 實作適當的錯誤處理
+- 使用 TypeScript 類型檢查
+- 避免 effect 副作用
+
+### 3.7 與 Signals 整合
+- 使用 `toSignal` 將 Observable 轉換為 Signal
+- 使用 `computed` 進行狀態計算
+- 實作適當的錯誤處理
+- 使用 TypeScript 類型檢查
+
+## 4. 專案特定標準
+
+### 4.1 檔案命名規範
+- 元件：`feature.component.ts`
+- 服務：`feature.service.ts`
+- 模型：`feature.model.ts`
+- 介面：`feature.interface.ts`
+- 常數：`feature.constants.ts`
+
+### 4.2 目錄結構
+```
+src/app/
+├── core/           # 核心模組
+├── shared/         # 共用模組
+├── features/       # 功能模組
+└── store/          # 狀態管理
+```
+
+### 4.3 程式碼風格
+- 使用 ESLint 和 Prettier
+- 遵循 Angular 風格指南
+- 使用 TypeScript 嚴格模式
+- 實作適當的錯誤處理
+
+### 4.4 效能優化
+- 使用 OnPush 變更檢測策略
+- 實作適當的程式碼分割
+- 使用 Angular 的內建優化功能
+- 實作適當的快取策略
+
+### 4.5 測試標準
+- 使用 Jest 進行單元測試
+- 使用 Cypress 進行 E2E 測試
+- 實作適當的測試覆蓋率
+- 使用 TypeScript 類型檢查
+
+

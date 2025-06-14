@@ -1,0 +1,102 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# loki-devextreme 專案規範
+
+## 1. 技術堆疊
+- DevExtreme 23.2.x
+- TypeScript
+- SCSS 作為樣式解決方案
+- Webpack 作為建構工具
+
+## 2. 開發標準
+
+### 2.1 元件開發
+- 使用 TypeScript 類別定義元件
+- 實作適當的生命週期方法
+- 使用 TypeScript 裝飾器
+- 遵循 DevExtreme 的元件命名規範
+
+### 2.2 資料綁定
+- 使用 DevExtreme 的資料綁定機制
+- 實作適當的資料轉換
+- 使用 TypeScript 類型檢查
+- 實作適當的錯誤處理
+
+### 2.3 事件處理
+- 使用 DevExtreme 的事件系統
+- 實作適當的事件處理器
+- 使用 TypeScript 類型檢查
+- 實作適當的錯誤處理
+
+### 2.4 樣式規範
+- 使用 SCSS 模組化樣式
+- 遵循 BEM 命名規範
+- 使用 DevExtreme 的主題系統
+- 實作適當的響應式設計
+
+## 3. 專案特定標準
+
+### 3.1 檔案命名規範
+- 元件：`feature.component.ts`
+- 服務：`feature.service.ts`
+- 模型：`feature.model.ts`
+- 介面：`feature.interface.ts`
+- 常數：`feature.constants.ts`
+
+### 3.2 目錄結構
+```
+src/
+├── components/     # 共用元件
+├── features/       # 功能模組
+├── services/       # 共用服務
+├── models/         # 共用模型
+└── shared/         # 共用工具和常數
+```
+
+### 3.3 程式碼風格
+- 使用 ESLint 和 Prettier
+- 使用 TypeScript 嚴格模式
+- 實作適當的錯誤處理
+- 遵循 DevExtreme 的最佳實踐
+
+### 3.4 效能優化
+- 使用 DevExtreme 的虛擬化功能
+- 實作適當的資料分頁
+- 使用 DevExtreme 的快取機制
+- 實作適當的程式碼分割
+
+### 3.5 測試標準
+- 使用 Jest 進行單元測試
+- 使用 Cypress 進行 E2E 測試
+- 實作適當的測試覆蓋率
+- 使用 TypeScript 類型檢查
+
+## 4. DevExtreme 特定規範
+
+### 4.1 資料網格（DataGrid）
+- 使用 TypeScript 類型定義
+- 實作適當的資料過濾
+- 使用 DevExtreme 的排序功能
+- 實作適當的資料分頁
+
+### 4.2 表單（Form）
+- 使用 TypeScript 類型定義
+- 實作適當的表單驗證
+- 使用 DevExtreme 的編輯功能
+- 實作適當的錯誤處理
+
+### 4.3 圖表（Charts）
+- 使用 TypeScript 類型定義
+- 實作適當的資料轉換
+- 使用 DevExtreme 的互動功能
+- 實作適當的響應式設計
+
+### 4.4 排程器（Scheduler）
+- 使用 TypeScript 類型定義
+- 實作適當的資源管理
+- 使用 DevExtreme 的拖放功能
+- 實作適當的衝突處理
+
