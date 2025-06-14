@@ -1,4 +1,11 @@
 <mat-card class="max-w-lg mx-auto mt-8">
+  <mat-card-header>
+    <mat-card-title>待辦清單</mat-card-title>
+    <mat-card-subtitle>
+      總共 {{ totalTodos() }} 項，已完成 {{ completedCount() }} 項
+    </mat-card-subtitle>
+  </mat-card-header>
+
   <mat-card-content>
     <form (ngSubmit)="submitTodo()" class="flex gap-2 mb-4 items-center">
       <mat-form-field class="flex-1" appearance="outline">
@@ -9,6 +16,7 @@
           [ngModel]="inputTodo()"
           (ngModelChange)="inputTodo.set($event)"
           (blur)="submitTodo()"
+          (keyup.escape)="cancelEdit()"
           name="todo"
           placeholder="輸入待辦事項"
         />
@@ -19,6 +27,12 @@
           >{{ editingTodo() ? 'edit' : 'add' }}</mat-icon
         >
       </mat-form-field>
+
+      @if (editingTodo()) {
+      <button type="button" mat-icon-button (click)="cancelEdit()">
+        <mat-icon>close</mat-icon>
+      </button>
+      }
     </form>
 
     <ul class="flex flex-col gap-2">
@@ -49,5 +63,13 @@
       </li>
       }
     </ul>
+
+    @if (completedCount() > 0) {
+    <div class="mt-4 text-center">
+      <button mat-stroked-button (click)="clearCompleted()">
+        清除已完成項目 ({{ completedCount() }})
+      </button>
+    </div>
+    }
   </mat-card-content>
 </mat-card>

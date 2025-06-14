@@ -3,15 +3,12 @@ import {
   OnInit,
   inject,
   signal,
-  computed,
   ViewChild,
   ElementRef,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { Todo, selectAllTodos, selectTodoState } from './_state/todo.selectors';
-import * as TodoActions from './_state/todo.actions';
+import { TodoFacade } from './_state/todo.facade';
+import { Todo } from './_state/todo.selectors';
 
 // Material 模組
 import { MatCardModule } from '@angular/material/card';
@@ -37,27 +34,26 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrls: ['./todo.component.scss'],
 })
 export class TodoComponent implements OnInit {
-  private store = inject(Store);
+  private todoFacade = inject(TodoFacade);
 
   @ViewChild('todoInput') todoInput!: ElementRef<HTMLInputElement>;
 
-  todos = toSignal(this.store.select(selectAllTodos), {
-    initialValue: [] as Todo[],
-  });
+  // 從 facade 獲取狀態
+  readonly todos = this.todoFacade.todos;
+  readonly completedCount = this.todoFacade.completedCount;
+  readonly totalTodos = this.todoFacade.totalTodos;
+  readonly activeTodos = this.todoFacade.activeTodos;
 
+  // Component 本地狀態
   inputTodo = signal('');
   editingTodo = signal<Todo | null>(null);
-  editingText = signal('');
 
   // life cycle
   // ------------------------------------------------------------
   ngOnInit() {
     console.log('TodoComponent initialized');
-
-    // Debug: 監聽整個 feature state
-    this.store.select(selectTodoState).subscribe((state) => {
-      console.log('Todo Feature State:', state);
-    });
+    // 使用 facade 的 debug 方法
+    this.todoFacade.logState();
   }
 
   // event handler
@@ -65,33 +61,41 @@ export class TodoComponent implements OnInit {
   submitTodo() {
     const todoText = this.inputTodo();
     if (!todoText.trim()) return;
-    const hasEditingTodo = this.editingTodo()?.id;
 
-    if (hasEditingTodo) {
-      this.store.dispatch(
-        TodoActions.updateTodo({
-          id: hasEditingTodo,
-          text: todoText.trim(),
-        })
-      );
+    const currentEditingTodo = this.editingTodo();
+    if (currentEditingTodo) {
+      this.todoFacade.updateTodo(currentEditingTodo.id, todoText);
       this.editingTodo.set(null);
     } else {
-      this.store.dispatch(TodoActions.addTodo({ text: todoText.trim() }));
+      this.todoFacade.addTodo(todoText);
     }
     this.inputTodo.set('');
   }
 
   deleteTodo(id: number) {
-    this.store.dispatch(TodoActions.deleteTodo({ id }));
+    this.todoFacade.deleteTodo(id);
   }
 
   toggleComplete(todo: Todo) {
-    this.store.dispatch(TodoActions.toggleTodo({ id: todo.id }));
+    this.todoFacade.toggleTodo(todo.id);
   }
 
   editTodo(todo: Todo) {
     this.editingTodo.set(todo);
     this.inputTodo.set(todo.text);
-    this.todoInput?.nativeElement.focus();
+    
+    setTimeout(() => {
+      this.todoInput?.nativeElement.focus();
+      this.todoInput?.nativeElement.select();
+    });
+  }
+
+  cancelEdit() {
+    this.editingTodo.set(null);
+    this.inputTodo.set('');
+  }
+
+  clearCompleted() {
+    this.todoFacade.clearCompleted();
   }
 }
