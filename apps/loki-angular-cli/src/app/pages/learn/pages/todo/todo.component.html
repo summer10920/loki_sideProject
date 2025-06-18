@@ -21,18 +21,12 @@
           placeholder="輸入待辦事項"
         />
         <mat-icon
-          (click)="submitTodo()"
+          (click)="editingTodo() ? cancelEdit() : submitTodo()"
           matSuffix
           class="cursor-pointer rotate-0 hover:text-blue-500 transition-all duration-300 hover:rotate-180"
-          >{{ editingTodo() ? 'edit' : 'add' }}</mat-icon
+          >{{ editingTodo() ? 'close' : 'add' }}</mat-icon
         >
       </mat-form-field>
-
-      @if (editingTodo()) {
-      <button type="button" mat-icon-button (click)="cancelEdit()">
-        <mat-icon>close</mat-icon>
-      </button>
-      }
     </form>
 
     <ul class="flex flex-col gap-2">
