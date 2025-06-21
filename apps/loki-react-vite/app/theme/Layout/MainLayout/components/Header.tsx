@@ -1,8 +1,8 @@
 import { FaReact, FaMoon, FaSun } from 'react-icons/fa';
-import { useTheme } from '../../../hooks/useTheme';
+import { useLokiTheme } from '../../MuiProvider';
 
 export const Header = () => {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark, toggleTheme } = useLokiTheme();
 
   return (
     <header className="fixed top-0 left-0 right-0 h-16 bg-gray-100 dark:bg-gray-800 shadow flex items-center justify-between px-4 z-50">

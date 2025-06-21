@@ -2,9 +2,8 @@ import { Link, useMatches } from 'react-router';
 import { useState } from 'react';
 import React from 'react';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
-import { menuConfig } from '../config/menu.config';
+import { menuConfig } from '../menu.config';
 
-// Types
 interface MenuItemProps {
   item: (typeof menuConfig)[0];
   currentPath: string;

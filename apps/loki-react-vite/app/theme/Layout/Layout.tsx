@@ -1,5 +1,6 @@
 import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 import { MainLayout } from './MainLayout';
+import { MuiProvider } from './MuiProvider';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,8 +11,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body suppressHydrationWarning={true} className="text-gray-900 dark:text-white">
-        <MainLayout>{children}</MainLayout>
+      <body
+        suppressHydrationWarning={true}
+        className="text-gray-900 dark:text-white"
+      >
+        <MuiProvider>
+          <MainLayout>{children}</MainLayout>
+        </MuiProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

@@ -1,4 +1,4 @@
-import { FaHome, FaInfoCircle, FaGraduationCap, FaListUl } from 'react-icons/fa';
+import { FaHome, FaInfoCircle, FaGraduationCap } from 'react-icons/fa';
 
 export const menuConfig = [
   {
@@ -19,7 +19,6 @@ export const menuConfig = [
       {
         label: 'Todo 清單',
         path: '/learn/todo',
-        icon: FaListUl,
       },
     ],
   },
