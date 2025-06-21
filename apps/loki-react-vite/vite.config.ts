@@ -3,10 +3,10 @@ import { defineConfig } from 'vite';
 import { reactRouter } from '@react-router/dev/vite';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
-
+import tailwindcss from '@tailwindcss/vite';
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/loki-react',
+  cacheDir: '../../node_modules/.vite/apps/loki-react-vite',
   server: {
     port: 4200,
     host: 'localhost',
@@ -17,6 +17,7 @@ export default defineConfig(() => ({
   },
   plugins: [
     !process.env.VITEST && reactRouter(),
+    tailwindcss(),
     nxViteTsPaths(),
     nxCopyAssetsPlugin(['*.md']),
   ],
@@ -25,7 +26,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   build: {
-    outDir: '../../dist/apps/loki-react',
+    outDir: '../../dist/apps/loki-react-vite',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
