@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { DarkMode, LightMode } from '@mui/icons-material';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { useLokiTheme } from '../hooks/useLokiTheme';
 
 export const ThemeToggle = () => {
@@ -9,10 +9,10 @@ export const ThemeToggle = () => {
     <Button
       onClick={toggleTheme}
       variant="outlined"
-      startIcon={isDark ? <LightMode /> : <DarkMode />}
+      startIcon={isDark ? <MdLightMode /> : <MdDarkMode />}
       className="transition-all duration-200"
     >
       {isDark ? '淺色模式' : '深色模式'}
     </Button>
   );
-}; 
+};

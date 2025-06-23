@@ -12,9 +12,9 @@ import {
 } from '@mui/material';
 import { MdExplore, MdInfo, MdDashboard } from 'react-icons/md';
 import { useTheme } from '@mui/material/styles';
-import { useLokiTheme } from './theme';
+import { useLokiTheme } from '../theme';
 
-export function App() {
+export function Home() {
   const muiTheme = useTheme();
   const { isDark, toggleTheme } = useLokiTheme();
 
@@ -163,4 +163,4 @@ export function App() {
   );
 }
 
-export default App; 
+export default Home; 
