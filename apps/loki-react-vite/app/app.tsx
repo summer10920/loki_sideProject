@@ -12,23 +12,23 @@ import {
 } from '@mui/material';
 import { Explore, Info, Dashboard } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
-import { useLokiTheme } from './theme/Layout/MuiProvider';
+import { useLokiTheme } from './theme';
 
 export function App() {
   const muiTheme = useTheme();
   const { isDark, toggleTheme } = useLokiTheme();
-  
-  console.log('Current MUI theme mode:', muiTheme.palette.mode);
-  console.log('Current isDark state:', isDark);
 
   return (
     <div>
       {/* MUI 主題測試區域 */}
       <Paper sx={{ m: 2, p: 3 }}>
         <Typography variant="h5" gutterBottom>
-          🎨 MUI 主題測試區域
+          <span role="img" aria-label="調色盤">
+            ��
+          </span>{' '}
+          MUI 主題測試區域
         </Typography>
-        
+
         <Box sx={{ mb: 2 }}>
           <Typography variant="body1">
             當前 MUI 主題模式: <strong>{muiTheme.palette.mode}</strong>
@@ -43,11 +43,7 @@ export function App() {
 
         <FormControlLabel
           control={
-            <Switch
-              checked={isDark}
-              onChange={toggleTheme}
-              color="primary"
-            />
+            <Switch checked={isDark} onChange={toggleTheme} color="primary" />
           }
           label="切換深色模式"
         />
@@ -63,7 +59,10 @@ export function App() {
         </h1>
         <div className="mt-6 p-4 bg-white/20 rounded-md backdrop-blur-sm">
           <p className="text-lg">
-            🎉 如果你看到漂亮的漸層背景和樣式，Tailwind v4 就成功運作了！
+            <span role="img" aria-label="慶祝">
+              🎉
+            </span>{' '}
+            如果你看到漂亮的漸層背景和樣式，Tailwind v4 就成功運作了！
           </p>
           <button className="mt-4 bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200">
             測試按鈕
@@ -78,7 +77,10 @@ export function App() {
             gutterBottom
             sx={{ color: 'white' }}
           >
-            🎨 MUI + Tailwind 整合展示
+            <span role="img" aria-label="調色盤">
+              🎨
+            </span>{' '}
+            MUI + Tailwind 整合展示
           </Typography>
 
           <Grid container spacing={3} sx={{ mt: 2 }}>

@@ -1,6 +1,14 @@
 import { FaHome, FaInfoCircle, FaGraduationCap } from 'react-icons/fa';
+import { IconType } from 'react-icons/lib';
 
-export const menuConfig = [
+interface MenuConfig {
+  label: string;
+  path: string;
+  icon?: IconType;
+  children?: MenuConfig[];
+}
+
+export const menuConfig: MenuConfig[] = [
   {
     label: '首頁',
     path: '/',

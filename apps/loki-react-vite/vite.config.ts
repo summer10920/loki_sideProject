@@ -11,6 +11,12 @@ export default defineConfig(() => ({
   server: {
     port: 4200,
     host: 'localhost',
+    watch: {
+      usePolling: false,
+      interval: 1000,
+      binaryInterval: 1000,
+      ignored: ['**/node_modules/**', '**/.git/**', '**/dist/**', '**/.nx/**'],
+    },
   },
   preview: {
     port: 4300,
@@ -22,10 +28,6 @@ export default defineConfig(() => ({
     nxViteTsPaths(),
     nxCopyAssetsPlugin(['*.md']),
   ],
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
   build: {
     outDir: '../../dist/apps/loki-react-vite',
     emptyOutDir: true,

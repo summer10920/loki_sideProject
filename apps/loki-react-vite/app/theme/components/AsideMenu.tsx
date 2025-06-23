@@ -2,7 +2,7 @@ import { Link, useMatches } from 'react-router';
 import { useState } from 'react';
 import React from 'react';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
-import { menuConfig } from '../menu.config';
+import { menuConfig } from '../config/menu';
 
 interface MenuItemProps {
   item: (typeof menuConfig)[0];

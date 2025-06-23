@@ -1,6 +1,6 @@
 import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
-import { MainLayout } from './MainLayout';
-import { MuiProvider } from './MuiProvider';
+import { ThemeProvider } from '../providers/ThemeProvider';
+import { Header, Footer, AsideMenu } from '../components';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,9 +15,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
         suppressHydrationWarning={true}
         className="text-gray-900 dark:text-white"
       >
-        <MuiProvider>
-          <MainLayout>{children}</MainLayout>
-        </MuiProvider>
+        <ThemeProvider>
+          <Header />
+          <section className="flex pt-16 min-h-screen">
+            <AsideMenu />
+            <main className="flex-1 bg-gray-50 dark:bg-gray-900 p-6 pb-12">
+              <article className="prose dark:prose-invert max-w-none">
+                {children}
+              </article>
+            </main>
+            <Footer />
+          </section>
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
