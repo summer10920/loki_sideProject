@@ -17,7 +17,7 @@ export default function NotFoundComponent() {
         404
       </h1>
       <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-        抱歉，找不到您要的頁面
+        抱歉，找不到您要的頁面：{location.pathname}
       </p>
       <a 
         href="/" 

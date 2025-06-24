@@ -26,6 +26,7 @@
     "@ngrx/entity": "^19.2.1",
     "@ngrx/store": "^19.2.1",
     "@ngrx/store-devtools": "^19.2.1",
+    "@react-router/fs-routes": "^7.6.2",
     "@react-router/node": "^7.2.0",
     "@react-router/serve": "^7.2.0",
     "@tailwindcss/vite": "^4.1.10",
