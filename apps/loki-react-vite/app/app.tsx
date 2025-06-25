@@ -10,7 +10,7 @@ import {
   Switch,
   FormControlLabel,
 } from '@mui/material';
-import { MdExplore, MdInfo, MdDashboard } from 'react-icons/md';
+import { MdExplore, MdInfo, MdDashboard, MdSchool } from 'react-icons/md';
 import { useTheme } from '@mui/material/styles';
 import { useLokiTheme } from './theme';
 
@@ -50,7 +50,7 @@ export function App() {
       </Paper>
 
       {/* 原有的 Tailwind 區域 */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto mt-8">
+      <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto mt-8">
         <h1 className="text-4xl font-bold mb-4 loki">
           <span className="block text-yellow-300 text-2xl font-normal mb-2">
             Hello there,
@@ -84,7 +84,35 @@ export function App() {
           </Typography>
 
           <Grid container spacing={3} sx={{ mt: 2 }}>
-            <Grid size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Card sx={{ height: '100%' }}>
+                <CardContent>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <MdSchool style={{ marginRight: 8, color: muiTheme.palette.success.main }} />
+                    <Typography variant="h6">學習中心</Typography>
+                  </Box>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mb: 2 }}
+                  >
+                    探索各種學習專案和練習，包括 Todo 應用、JavaScript 基礎等。
+                  </Typography>
+                  <Button
+                    component={Link}
+                    to="/learn"
+                    variant="contained"
+                    color="success"
+                    startIcon={<MdSchool />}
+                    fullWidth
+                  >
+                    開始學習
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid size={{ xs: 12, md: 6 }}>
               <Card sx={{ height: '100%' }}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -111,7 +139,7 @@ export function App() {
               </Card>
             </Grid>
 
-            <Grid size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Card sx={{ height: '100%' }}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -137,7 +165,7 @@ export function App() {
               </Card>
             </Grid>
 
-            <Grid size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Card sx={{ height: '100%' }}>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
