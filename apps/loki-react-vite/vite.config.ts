@@ -55,7 +55,6 @@ export default defineConfig(() => ({
       'react-router',
       'react-icons',
     ],
-    force: true,
   },
   define: {
     'import.meta.vitest': undefined,
