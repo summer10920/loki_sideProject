@@ -19,12 +19,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Header />
           <section className="flex pt-16 min-h-screen">
             <AsideMenu />
-            <main className="flex-1 bg-gray-50 dark:bg-gray-900 p-6 pb-12">
-              <article className="prose dark:prose-invert max-w-none">
+            <main className="flex-1 bg-gray-50 dark:bg-gray-900 flex flex-col">
+              <article className="prose dark:prose-invert max-w-none flex-1 p-4">
                 {children}
               </article>
+              <Footer />
             </main>
-            <Footer />
           </section>
         </ThemeProvider>
         <ScrollRestoration />

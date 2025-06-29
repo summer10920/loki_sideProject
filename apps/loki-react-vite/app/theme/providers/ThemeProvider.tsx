@@ -32,20 +32,29 @@ const baseTheme = {
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  // 主題狀態管理
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    // 從 localStorage 讀取或使用系統偏好
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('loki-theme');
-      if (saved) return saved === 'dark';
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  // 修復 hydration mismatch - 統一初始值
+  const [isDark, setIsDark] = useState<boolean>(false); // 統一預設為 false
+  const [mounted, setMounted] = useState(false);
+
+  // 客戶端載入後設定實際值
+  useEffect(() => {
+    setMounted(true);
+
+    // 讀取實際的主題偏好
+    const saved = localStorage.getItem('loki-theme');
+    if (saved) {
+      setIsDark(saved === 'dark');
+    } else {
+      const systemDark = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
+      setIsDark(systemDark);
     }
-    return false;
-  });
+  }, []);
 
   // 監聽系統主題變化
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (!mounted) return;
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
@@ -58,16 +67,18 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
+  }, [mounted]);
 
   // 更新 DOM 和 localStorage
   useEffect(() => {
+    if (!mounted) return;
+
     // 使用 requestAnimationFrame 來避免阻塞渲染
     requestAnimationFrame(() => {
       document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
       localStorage.setItem('loki-theme', isDark ? 'dark' : 'light');
     });
-  }, [isDark]);
+  }, [isDark, mounted]);
 
   const toggleTheme = useCallback(() => {
     setIsDark((prev) => !prev);
@@ -98,7 +109,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   }, [isDark]);
 
   return (
-    <LokiThemeContext.Provider value={{ isDark, toggleTheme }}>
+    <LokiThemeContext.Provider value={{ isDark, toggleTheme, mounted }}>
       <MuiThemeProvider theme={muiTheme}>
         <CssBaseline enableColorScheme />
         {children}

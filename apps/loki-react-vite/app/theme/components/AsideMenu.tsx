@@ -134,7 +134,7 @@ export const AsideMenu = () => {
       onKeyUp={handleKeyUp}
       tabIndex={0}
     >
-      <nav>
+      <nav className="sticky top-16">
         <ul>
           {menuConfig.map((item) => (
             <li key={item.path}>

@@ -108,7 +108,7 @@ export default function LearnIndex() {
                     <Chip 
                       label={project.difficulty}
                       size="small"
-                      color={getDifficultyColor(project.difficulty) as any}
+                      color={getDifficultyColor(project.difficulty)}
                       sx={{ mt: 0.5 }}
                     />
                   </Box>

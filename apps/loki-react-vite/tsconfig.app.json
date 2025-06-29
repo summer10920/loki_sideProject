@@ -9,7 +9,7 @@
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx"
-  ],
+, "app/entry.server.tsx.backup", "app/entry.client.tsx.backup"  ],
   "exclude": [
     "tests/**/*.spec.ts",
     "tests/**/*.test.ts",

@@ -4,6 +4,7 @@ import { createContext } from 'react';
 export interface LokiThemeContextType {
   isDark: boolean;
   toggleTheme: () => void;
+  mounted: boolean;
 }
 
 // 建立 Context

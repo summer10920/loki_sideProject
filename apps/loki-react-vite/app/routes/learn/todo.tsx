@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Typography,
@@ -17,7 +17,8 @@ import {
   DialogContent,
   DialogActions,
   Alert,
-  Divider
+  Divider,
+  CircularProgress,
 } from '@mui/material';
 import {
   MdAdd,
@@ -26,113 +27,113 @@ import {
   MdCheck,
   MdClose,
   MdCheckBox,
-  MdInfo
+  MdInfo,
 } from 'react-icons/md';
-
-interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-  createdAt: Date;
-}
+import { useTodos } from '../../hooks/useIndexedDB';
 
 export default function TodoApp() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const { todos, loading, error, addTodo, updateTodo, deleteTodo } = useTodos();
   const [newTodo, setNewTodo] = useState('');
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editText, setEditText] = useState('');
   const [showInfo, setShowInfo] = useState(false);
 
-  // 從 localStorage 載入 todos
-  useEffect(() => {
-    const savedTodos = localStorage.getItem('loki-todos');
-    if (savedTodos) {
-      const parsedTodos = JSON.parse(savedTodos);
-      // 將日期字串轉回 Date 物件
-      const todosWithDates = parsedTodos.map((todo: any) => ({
-        ...todo,
-        createdAt: new Date(todo.createdAt)
-      }));
-      setTodos(todosWithDates);
-    }
-  }, []);
-
-  // 儲存 todos 到 localStorage
-  useEffect(() => {
-    if (todos.length > 0) {
-      localStorage.setItem('loki-todos', JSON.stringify(todos));
-    }
-  }, [todos]);
-
-  // 新增 todo
-  const addTodo = () => {
+  // event method
+  // -----------------------------------------------------------------------
+  const handleAddTodo = async () => {
     if (newTodo.trim() === '') return;
-
-    const todo: Todo = {
-      id: Date.now(),
-      text: newTodo.trim(),
-      completed: false,
-      createdAt: new Date()
-    };
-
-    setTodos([...todos, todo]);
-    setNewTodo('');
+    try {
+      await addTodo(newTodo.trim());
+      setNewTodo('');
+    } catch (err) {
+      console.error('新增失敗:', err);
+    }
   };
 
-  // 刪除 todo
-  const deleteTodo = (id: number) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+  const handleDeleteTodo = async (id: number) => {
+    try {
+      await deleteTodo(id);
+    } catch (err) {
+      console.error('刪除失敗:', err);
+    }
   };
 
-  // 切換完成狀態
-  const toggleTodo = (id: number) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
+  const toggleTodo = async (id: number) => {
+    const todo = todos.find((t) => t.id === id);
+    if (todo) {
+      await updateTodo(id, { completed: !todo.completed });
+    }
   };
 
-  // 開始編輯
   const startEdit = (id: number, text: string) => {
     setEditingId(id);
     setEditText(text);
   };
 
-  // 完成編輯
-  const finishEdit = () => {
+  const finishEdit = async () => {
     if (editText.trim() === '') {
       setEditingId(null);
       return;
     }
 
-    setTodos(todos.map(todo =>
-      todo.id === editingId ? { ...todo, text: editText.trim() } : todo
-    ));
-    setEditingId(null);
-    setEditText('');
+    try {
+      await updateTodo(editingId!, { text: editText.trim() });
+      setEditingId(null);
+      setEditText('');
+    } catch (err) {
+      console.error('編輯失敗:', err);
+    }
   };
 
-  // 取消編輯
   const cancelEdit = () => {
     setEditingId(null);
     setEditText('');
   };
 
+  // render
+  // -----------------------------------------------------------------------
+  // 載入中狀態
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <CircularProgress />
+        <Typography sx={{ ml: 2 }}>載入中...</Typography>
+      </Box>
+    );
+  }
+
+  // 錯誤狀態
+  if (error) {
+    return (
+      <Box sx={{ mt: 4 }}>
+        <Alert severity="error">錯誤: {error}</Alert>
+      </Box>
+    );
+  }
+
   // 統計
-  const completedCount = todos.filter(todo => todo.completed).length;
+  const completedCount = todos.filter((todo) => todo.completed).length;
   const totalCount = todos.length;
   const pendingCount = totalCount - completedCount;
 
   return (
     <Box>
       {/* 頁面標題和說明 */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          mb: 3,
+        }}
+      >
         <Box>
           <Typography variant="h4" component="h2" gutterBottom>
             <MdCheckBox style={{ marginRight: 8, verticalAlign: 'middle' }} />
-            Todo 應用程式
+            Todo 應用程式 (IndexedDB)
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            學習 React 狀態管理和本地儲存的實作練習
+            使用 IndexedDB 進行本地資料儲存的 Todo 應用程式
           </Typography>
         </Box>
         <Button
@@ -164,13 +165,13 @@ export default function TodoApp() {
             placeholder="輸入新的待辦事項..."
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+            onKeyPress={(e) => e.key === 'Enter' && handleAddTodo()}
             size="small"
           />
           <Button
             variant="contained"
             startIcon={<MdAdd />}
-            onClick={addTodo}
+            onClick={handleAddTodo}
             disabled={newTodo.trim() === ''}
           >
             新增
@@ -184,7 +185,7 @@ export default function TodoApp() {
           待辦清單
         </Typography>
         <Divider />
-        
+
         {todos.length === 0 ? (
           <Box sx={{ p: 4, textAlign: 'center' }}>
             <Typography color="text.secondary">
@@ -200,7 +201,7 @@ export default function TodoApp() {
                   onChange={() => toggleTodo(todo.id)}
                   color="primary"
                 />
-                
+
                 {editingId === todo.id ? (
                   <Box sx={{ flexGrow: 1, display: 'flex', gap: 1, ml: 1 }}>
                     <TextField
@@ -214,10 +215,18 @@ export default function TodoApp() {
                       size="small"
                       autoFocus
                     />
-                    <IconButton onClick={finishEdit} color="primary" size="small">
+                    <IconButton
+                      onClick={finishEdit}
+                      color="primary"
+                      size="small"
+                    >
                       <MdCheck />
                     </IconButton>
-                    <IconButton onClick={cancelEdit} color="secondary" size="small">
+                    <IconButton
+                      onClick={cancelEdit}
+                      color="secondary"
+                      size="small"
+                    >
                       <MdClose />
                     </IconButton>
                   </Box>
@@ -227,7 +236,7 @@ export default function TodoApp() {
                     secondary={`建立時間：${todo.createdAt.toLocaleString()}`}
                     sx={{
                       textDecoration: todo.completed ? 'line-through' : 'none',
-                      opacity: todo.completed ? 0.6 : 1
+                      opacity: todo.completed ? 0.6 : 1,
                     }}
                   />
                 )}
@@ -243,7 +252,7 @@ export default function TodoApp() {
                       <MdEdit />
                     </IconButton>
                     <IconButton
-                      onClick={() => deleteTodo(todo.id)}
+                      onClick={() => handleDeleteTodo(todo.id)}
                       color="error"
                       size="small"
                     >
@@ -258,22 +267,27 @@ export default function TodoApp() {
       </Paper>
 
       {/* 功能說明對話框 */}
-      <Dialog open={showInfo} onClose={() => setShowInfo(false)} maxWidth="sm" fullWidth>
+      <Dialog
+        open={showInfo}
+        onClose={() => setShowInfo(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Todo 應用程式功能說明</DialogTitle>
         <DialogContent>
           <Alert severity="info" sx={{ mb: 2 }}>
-            這個 Todo 應用程式展示了 React 的核心概念和實用功能
+            這個 Todo 應用程式使用 IndexedDB 進行資料儲存
           </Alert>
-          
+
           <Typography variant="h6" gutterBottom>
             主要功能：
           </Typography>
           <Box component="ul" sx={{ pl: 2 }}>
             <li>✅ 新增待辦事項</li>
-            <li>✏️ 編輯現有事項（雙擊或點擊編輯按鈕）</li>
+            <li>✏️ 編輯現有事項（點擊編輯按鈕）</li>
             <li>🗑️ 刪除事項</li>
             <li>☑️ 標記為完成/未完成</li>
-            <li>💾 自動儲存到瀏覽器本地儲存</li>
+            <li>💾 使用 IndexedDB 本地儲存</li>
             <li>📊 即時統計顯示</li>
           </Box>
 
@@ -281,11 +295,12 @@ export default function TodoApp() {
             技術特色：
           </Typography>
           <Box component="ul" sx={{ pl: 2 }}>
-            <li>React Hooks (useState, useEffect)</li>
+            <li>React Hooks (useState, useEffect, useCallback)</li>
             <li>TypeScript 型別安全</li>
             <li>Material-UI 設計系統</li>
-            <li>Local Storage 資料持久化</li>
-            <li>響應式設計</li>
+            <li>IndexedDB 資料持久化</li>
+            <li>自訂 React Hook 封裝</li>
+            <li>錯誤處理和載入狀態</li>
           </Box>
         </DialogContent>
         <DialogActions>
@@ -294,4 +309,4 @@ export default function TodoApp() {
       </Dialog>
     </Box>
   );
-} 
+}

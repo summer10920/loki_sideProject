@@ -40,7 +40,7 @@ export default defineConfig(() => ({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          mui: ['@mui/material', '@mui/system'],
+          mui: ['@mui/material'],
           router: ['react-router'],
         },
       },
@@ -49,7 +49,6 @@ export default defineConfig(() => ({
   optimizeDeps: {
     include: [
       '@mui/material',
-      '@mui/system',
       'react',
       'react-dom',
       'react-router',
