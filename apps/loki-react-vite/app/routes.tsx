@@ -14,5 +14,5 @@ export default [
   ]),
   
   // Catch-all route for unmatched paths (like DevTools requests)
-  route('*', './routes/$.tsx'),
+  route('*', './routes/404.tsx'),
 ] satisfies RouteConfig;

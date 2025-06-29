@@ -95,19 +95,19 @@ export default function TodoApp() {
   // 載入中狀態
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+      <div className="flex justify-center mt-8">
         <CircularProgress />
-        <Typography sx={{ ml: 2 }}>載入中...</Typography>
-      </Box>
+        <Typography className="ml-4">載入中...</Typography>
+      </div>
     );
   }
 
   // 錯誤狀態
   if (error) {
     return (
-      <Box sx={{ mt: 4 }}>
+      <div className="mt-8">
         <Alert severity="error">錯誤: {error}</Alert>
-      </Box>
+      </div>
     );
   }
 
@@ -117,25 +117,18 @@ export default function TodoApp() {
   const pendingCount = totalCount - completedCount;
 
   return (
-    <Box>
+    <div>
       {/* 頁面標題和說明 */}
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          mb: 3,
-        }}
-      >
-        <Box>
-          <Typography variant="h4" component="h2" gutterBottom>
-            <MdCheckBox style={{ marginRight: 8, verticalAlign: 'middle' }} />
+      <div className="flex justify-between items-start mb-6">
+        <div>
+          <Typography variant="h4" component="h2" className="mb-2">
+            <MdCheckBox className="mr-2 align-middle" />
             Todo 應用程式 (IndexedDB)
           </Typography>
           <Typography variant="body1" color="text.secondary">
             使用 IndexedDB 進行本地資料儲存的 Todo 應用程式
           </Typography>
-        </Box>
+        </div>
         <Button
           variant="outlined"
           startIcon={<MdInfo />}
@@ -143,25 +136,25 @@ export default function TodoApp() {
         >
           功能說明
         </Button>
-      </Box>
+      </div>
 
       {/* 統計資訊 */}
-      <Paper sx={{ p: 2, mb: 3 }}>
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+      <Paper className="p-4 mb-6">
+        <div className="flex gap-4 flex-wrap">
           <Chip label={`總計: ${totalCount}`} color="primary" />
           <Chip label={`待完成: ${pendingCount}`} color="warning" />
           <Chip label={`已完成: ${completedCount}`} color="success" />
-        </Box>
+        </div>
       </Paper>
 
       {/* 新增 Todo */}
-      <Paper sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h6" gutterBottom>
+      <Paper className="p-6 mb-6">
+        <Typography variant="h6" className="mb-4">
           新增待辦事項
         </Typography>
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <div className="flex gap-4">
           <TextField
-            fullWidth
+            className="flex-grow"
             placeholder="輸入新的待辦事項..."
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
@@ -176,22 +169,22 @@ export default function TodoApp() {
           >
             新增
           </Button>
-        </Box>
+        </div>
       </Paper>
 
       {/* Todo 清單 */}
-      <Paper sx={{ mb: 3 }}>
-        <Typography variant="h6" sx={{ p: 2, pb: 1 }}>
+      <Paper className="mb-6">
+        <Typography variant="h6" className="p-4 pb-2">
           待辦清單
         </Typography>
         <Divider />
 
         {todos.length === 0 ? (
-          <Box sx={{ p: 4, textAlign: 'center' }}>
+          <div className="p-8 text-center">
             <Typography color="text.secondary">
               還沒有任何待辦事項，快來新增一個吧！
             </Typography>
-          </Box>
+          </div>
         ) : (
           <List>
             {todos.map((todo, index) => (
@@ -203,7 +196,7 @@ export default function TodoApp() {
                 />
 
                 {editingId === todo.id ? (
-                  <Box sx={{ flexGrow: 1, display: 'flex', gap: 1, ml: 1 }}>
+                  <div className="flex-grow flex gap-2 ml-2">
                     <TextField
                       fullWidth
                       value={editText}
@@ -229,15 +222,16 @@ export default function TodoApp() {
                     >
                       <MdClose />
                     </IconButton>
-                  </Box>
+                  </div>
                 ) : (
                   <ListItemText
                     primary={todo.text}
                     secondary={`建立時間：${todo.createdAt.toLocaleString()}`}
-                    sx={{
-                      textDecoration: todo.completed ? 'line-through' : 'none',
-                      opacity: todo.completed ? 0.6 : 1,
-                    }}
+                    className={`${
+                      todo.completed 
+                        ? 'line-through opacity-60' 
+                        : ''
+                    }`}
                   />
                 )}
 
@@ -247,7 +241,7 @@ export default function TodoApp() {
                       onClick={() => startEdit(todo.id, todo.text)}
                       color="primary"
                       size="small"
-                      sx={{ mr: 1 }}
+                      className="mr-2"
                     >
                       <MdEdit />
                     </IconButton>
@@ -275,38 +269,38 @@ export default function TodoApp() {
       >
         <DialogTitle>Todo 應用程式功能說明</DialogTitle>
         <DialogContent>
-          <Alert severity="info" sx={{ mb: 2 }}>
+          <Alert severity="info" className="mb-4">
             這個 Todo 應用程式使用 IndexedDB 進行資料儲存
           </Alert>
 
           <Typography variant="h6" gutterBottom>
             主要功能：
           </Typography>
-          <Box component="ul" sx={{ pl: 2 }}>
+          <ul className="pl-4">
             <li>✅ 新增待辦事項</li>
             <li>✏️ 編輯現有事項（點擊編輯按鈕）</li>
             <li>🗑️ 刪除事項</li>
             <li>☑️ 標記為完成/未完成</li>
             <li>💾 使用 IndexedDB 本地儲存</li>
             <li>📊 即時統計顯示</li>
-          </Box>
+          </ul>
 
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+          <Typography variant="h6" gutterBottom className="mt-4">
             技術特色：
           </Typography>
-          <Box component="ul" sx={{ pl: 2 }}>
+          <ul className="pl-4">
             <li>React Hooks (useState, useEffect, useCallback)</li>
             <li>TypeScript 型別安全</li>
             <li>Material-UI 設計系統</li>
             <li>IndexedDB 資料持久化</li>
             <li>自訂 React Hook 封裝</li>
             <li>錯誤處理和載入狀態</li>
-          </Box>
+          </ul>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowInfo(false)}>關閉</Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </div>
   );
 }
