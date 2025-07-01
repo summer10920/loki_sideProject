@@ -7,7 +7,7 @@ export default [
   // Learn 路由群組
   route('learn', './routes/learn/layout.tsx', [
     index('./routes/learn/index.tsx'),
-    route('todo', './routes/learn/todo.tsx'),
+    route('todo', './routes/learn/todo/index.tsx'),
     // 未來可以加入更多學習相關路由
     // route('javascript', './routes/learn/javascript.tsx'),
     // route('typescript', './routes/learn/typescript.tsx'),
