@@ -6,50 +6,15 @@ import {
   Card,
   CardContent,
   Grid,
-  Paper,
-  Switch,
-  FormControlLabel,
 } from '@mui/material';
 import { MdExplore, MdInfo, MdDashboard, MdSchool } from 'react-icons/md';
 import { useTheme } from '@mui/material/styles';
-import { useLokiTheme } from '../theme';
 
 export function Home() {
   const muiTheme = useTheme();
-  const { isDark, toggleTheme } = useLokiTheme();
 
   return (
     <div>
-      {/* MUI 主題測試區域 */}
-      <Paper sx={{ p: 3 }}>
-        <Typography variant="h5" gutterBottom>
-          <span role="img" aria-label="調色盤">
-            🎨
-          </span>{' '}
-          MUI 主題測試區域
-        </Typography>
-
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="body1">
-            當前 MUI 主題模式: <strong>{muiTheme.palette.mode}</strong>
-          </Typography>
-          <Typography variant="body1">
-            當前 isDark 狀態: <strong>{isDark ? 'true' : 'false'}</strong>
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            這個文字顏色應該會根據主題變化
-          </Typography>
-        </Box>
-
-        <FormControlLabel
-          control={
-            <Switch checked={isDark} onChange={toggleTheme} color="primary" />
-          }
-          label="切換深色模式"
-        />
-      </Paper>
-
-      {/* 原有的 Tailwind 區域 */}
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto mt-8">
         <h1 className="text-4xl font-bold mb-4 loki">
           <span className="block text-yellow-300 text-2xl font-normal mb-2">
