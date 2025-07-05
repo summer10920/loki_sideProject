@@ -14,8 +14,9 @@ const iconToSvgUrl = (
   return `url('data:image/svg+xml;utf8,${encodeURIComponent(svgString)}')`;
 };
 
-const StyledMaterialUISwitch = styled(Switch)<{ isDark?: boolean }>(
-  ({ theme, isDark = false }) => ({
+const StyledMaterialUISwitch = styled(Switch)(({ theme }) => {
+  const isDark = theme.palette.mode === 'dark';
+  return {
     width: 35,
     height: 22,
     padding: 7,
@@ -65,8 +66,8 @@ const StyledMaterialUISwitch = styled(Switch)<{ isDark?: boolean }>(
         duration: theme.transitions.duration.standard,
       }),
     },
-  })
-);
+  };
+});
 
 export const Header = () => {
   const { isDark, toggleTheme } = useLokiTheme();
@@ -76,11 +77,7 @@ export const Header = () => {
       <FaReact className="h-10 w-10 text-[#61dafb]" />
       <h1 className="text-2xl font-semibold">Loki-Website</h1>
       <nav className="flex items-center gap-4">
-        <StyledMaterialUISwitch
-          checked={isDark}
-          onChange={toggleTheme}
-          isDark={isDark}
-        />
+        <StyledMaterialUISwitch checked={isDark} onChange={toggleTheme} />
       </nav>
     </header>
   );

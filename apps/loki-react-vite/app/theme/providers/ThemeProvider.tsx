@@ -11,7 +11,7 @@ interface ThemeProviderProps {
 // 主題配置
 const baseTheme = {
   typography: {
-    fontFamily: 'Inter, system-ui, sans-serif',
+    fontFamily: '"Roboto", "Noto Sans TC", "system-ui", "sans-serif"',
     h1: {
       fontSize: '2.5rem',
       fontWeight: 600,
@@ -103,6 +103,42 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         text: {
           primary: isDark ? '#ffffff' : '#000000',
           secondary: isDark ? '#aaaaaa' : '#666666',
+        },
+        purple: {
+          main: isDark ? '#ba68c8' : '#9c27b0',
+          light: isDark ? '#ce93d8' : '#ba68c8',
+          dark: isDark ? '#7b1fa2' : '#6a1b9a',
+          contrastText: '#ffffff',
+        },
+        orange: {
+          main: isDark ? '#ffb74d' : '#ff9800',
+          light: isDark ? '#ffcc02' : '#ffb74d',
+          dark: isDark ? '#f57c00' : '#e65100',
+          contrastText: '#000000',
+        },
+        teal: {
+          main: isDark ? '#4db6ac' : '#009688',
+          light: isDark ? '#80cbc4' : '#4db6ac',
+          dark: isDark ? '#00695c' : '#004d40',
+          contrastText: '#ffffff',
+        },
+        lokiRed: {
+          main: isDark ? '#f87171' : '#dc2626',
+          light: isDark ? '#fca5a5' : '#ef4444',
+          dark: isDark ? '#b91c1c' : '#991b1b',
+          contrastText: '#ffffff',
+        },
+        lokiBlue: {
+          main: isDark ? '#60a5fa' : '#2563eb',
+          light: isDark ? '#93c5fd' : '#3b82f6',
+          dark: isDark ? '#1d4ed8' : '#1e40af',
+          contrastText: '#ffffff',
+        },
+        lokiGreen: {
+          main: isDark ? '#4ade80' : '#16a34a',
+          light: isDark ? '#86efac' : '#22c55e',
+          dark: isDark ? '#15803d' : '#14532d',
+          contrastText: '#ffffff',
         },
       },
     });

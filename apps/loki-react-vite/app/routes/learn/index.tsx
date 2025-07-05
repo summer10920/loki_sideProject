@@ -17,12 +17,12 @@ export default function LearnIndex() {
       id: 'todo',
       title: 'Todo 應用程式',
       description:
-        '學習如何建立一個功能完整的待辦事項應用程式，包括 CRUD 操作、狀態管理和本地儲存。',
+        '完整的待辦事項管理應用程式，包含 CRUD 操作、內聯編輯、完成狀態切換、基本統計資訊，以及使用 IndexedDB 進行離線資料儲存。支援錯誤處理和載入狀態管理。',
       path: '/learn/todo',
       icon: <MdCheckBox />,
       difficulty: '初級',
-      tags: ['React', 'State Management', 'Local Storage'],
-      color: 'primary',
+      tags: ['React Hooks', 'IndexedDB', 'CRUD', 'Material-UI'],
+      color: 'lokiGreen',
     },
     {
       id: 'javascript',
@@ -64,7 +64,7 @@ export default function LearnIndex() {
 
   return (
     <Box>
-      <Typography variant="h4" component="h2" gutterBottom>
+      <Typography variant="h5" component="h2" gutterBottom>
         學習專案
       </Typography>
 
